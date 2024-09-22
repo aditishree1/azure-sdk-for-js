@@ -28,7 +28,7 @@ import {
   OperationInput,
   BulkOptions,
   decorateBatchOperation,
-  splitBatchBasedOnBodySize,
+  splitBatchBasedOnBodySizeAndLength,
   BulkOperationResponse,
 } from "../../utils/batch";
 import { assertNotUndefined, isPrimitivePartitionKeyValue } from "../../utils/typeChecks";
@@ -495,8 +495,7 @@ export class Items {
       // split batches based on cumulative size of operations
       const batchMap = batches
         .filter((batch: Batch) => batch.operations.length)
-        .flatMap((batch: Batch) => splitBatchBasedOnBodySize(batch));
-
+        .flatMap((batch: Batch) => splitBatchBasedOnBodySizeAndLength(batch));
       await Promise.all(
         this.executeBatchOperations(
           batchMap,

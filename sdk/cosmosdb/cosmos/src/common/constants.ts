@@ -211,6 +211,7 @@ export const Constants = {
 
   // Bulk Operations
   DefaultMaxBulkRequestBodySizeInBytes: 220201,
+  MaxOperationsPerBatch: 100,
 
   Quota: {
     CollectionSize: "collectionSize",

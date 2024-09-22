@@ -10,6 +10,7 @@ export interface StatusCodesType {
   Created: 201;
   Accepted: 202;
   NoContent: 204;
+  MultiStatus: 207;
   NotModified: 304;
 
   // Client error
@@ -47,6 +48,7 @@ export const StatusCodes: StatusCodesType = {
   Created: 201,
   Accepted: 202,
   NoContent: 204,
+  MultiStatus: 207,
   NotModified: 304,
 
   // Client error

@@ -248,7 +248,7 @@ function populateIdsIfNeeded(operationInput: OperationInput, options: RequestOpt
  * @returns
  * @hidden
  */
-export function splitBatchBasedOnBodySize(originalBatch: Batch): Batch[] {
+export function splitBatchBasedOnBodySizeAndLength(originalBatch: Batch): Batch[] {
   if (originalBatch?.operations === undefined || originalBatch.operations.length < 1) return [];
   let currentBatchSize = calculateObjectSizeInBytes(originalBatch.operations[0]);
   let currentBatch: Batch = {
@@ -262,7 +262,10 @@ export function splitBatchBasedOnBodySize(originalBatch: Batch): Batch[] {
   for (let index = 1; index < originalBatch.operations.length; index++) {
     const operation = originalBatch.operations[index];
     const currentOpSize = calculateObjectSizeInBytes(operation);
-    if (currentBatchSize + currentOpSize > Constants.DefaultMaxBulkRequestBodySizeInBytes) {
+    if (
+      currentBatchSize + currentOpSize > Constants.DefaultMaxBulkRequestBodySizeInBytes ||
+      currentBatch.operations.length >= Constants.MaxOperationsPerBatch
+    ) {
       currentBatch = {
         ...originalBatch,
         operations: [],

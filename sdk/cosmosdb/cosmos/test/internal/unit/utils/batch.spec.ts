@@ -8,7 +8,7 @@ import {
   BulkOperationType,
   calculateObjectSizeInBytes,
   Operation,
-  splitBatchBasedOnBodySize,
+  splitBatchBasedOnBodySizeAndLength,
 } from "../../../../src/utils/batch";
 
 const operationSkeleton: Operation = {
@@ -64,7 +64,7 @@ describe("Test batch split based on size", function () {
       rangeId: "",
       indexes: t.inputOperationDescription.map((op) => op.index),
     };
-    const processedBatches: Batch[] = splitBatchBasedOnBodySize(inputBatch);
+    const processedBatches: Batch[] = splitBatchBasedOnBodySizeAndLength(inputBatch);
     assert.strictEqual(
       processedBatches.length,
       t.resultingBatchDescription.resultingBatchLength,
